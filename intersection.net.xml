@@ -65,14 +65,14 @@
 
     <!-- Traffic Light Logic will be in additional files -->
     <tlLogic id="center" type="static" programID="normal" offset="0">
-        <!-- North-South Green (20 seconds) -->
-        <phase duration="20" state="GGGrrrGGGrrr"/>
-        <!-- North-South Yellow (3 seconds) -->
-        <phase duration="3" state="yyyrrryyyrrr"/>
-        <!-- East-West Green (20 seconds) -->
-        <phase duration="20" state="rrrGGGrrrGGG"/>
-        <!-- East-West Yellow (3 seconds) -->
-        <phase duration="3" state="rrryyyrrryyy"/>
+        <!-- North-South Green (5 seconds) -->
+        <phase duration="5" state="GGGrrrGGGrrr"/>
+        <!-- North-South Yellow (2 seconds) -->
+        <phase duration="2" state="yyyrrryyyrrr"/>
+        <!-- East-West Green (5 seconds) -->
+        <phase duration="5" state="rrrGGGrrrGGG"/>
+        <!-- East-West Yellow (2 seconds) -->
+        <phase duration="2" state="rrryyyrrryyy"/>
     </tlLogic>
 
     <!-- Junction connections -->
@@ -101,20 +101,20 @@
     <junction id="west" type="priority" x="0.00" y="100.00" incLanes="west_out_0 west_out_1 west_out_2" intLanes="" shape="0.00,103.20 0.00,112.80 0.00,103.20"/>
 
     <!-- Connections define allowed movements through junction -->
-    <connection from="north_in" to="south_out" fromLane="0" toLane="0" tl="center" linkIndex="0"/>
-    <connection from="north_in" to="south_out" fromLane="1" toLane="1" tl="center" linkIndex="1"/>
-    <connection from="north_in" to="south_out" fromLane="2" toLane="2" tl="center" linkIndex="2"/>
+    <connection from="north_in" to="south_out" fromLane="0" toLane="0" dir="s" state="O" tl="center" linkIndex="0"/>
+    <connection from="north_in" to="south_out" fromLane="1" toLane="1" dir="s" state="O" tl="center" linkIndex="1"/>
+    <connection from="north_in" to="south_out" fromLane="2" toLane="2" dir="s" state="O" tl="center" linkIndex="2"/>
     
-    <connection from="east_in" to="west_out" fromLane="0" toLane="0" tl="center" linkIndex="3"/>
-    <connection from="east_in" to="west_out" fromLane="1" toLane="1" tl="center" linkIndex="4"/>
-    <connection from="east_in" to="west_out" fromLane="2" toLane="2" tl="center" linkIndex="5"/>
+    <connection from="east_in" to="west_out" fromLane="0" toLane="0" dir="s" state="O" tl="center" linkIndex="3"/>
+    <connection from="east_in" to="west_out" fromLane="1" toLane="1" dir="s" state="O" tl="center" linkIndex="4"/>
+    <connection from="east_in" to="west_out" fromLane="2" toLane="2" dir="s" state="O" tl="center" linkIndex="5"/>
     
-    <connection from="south_in" to="north_out" fromLane="0" toLane="0" tl="center" linkIndex="6"/>
-    <connection from="south_in" to="north_out" fromLane="1" toLane="1" tl="center" linkIndex="7"/>
-    <connection from="south_in" to="north_out" fromLane="2" toLane="2" tl="center" linkIndex="8"/>
+    <connection from="south_in" to="north_out" fromLane="0" toLane="0" dir="s" state="O" tl="center" linkIndex="6"/>
+    <connection from="south_in" to="north_out" fromLane="1" toLane="1" dir="s" state="O" tl="center" linkIndex="7"/>
+    <connection from="south_in" to="north_out" fromLane="2" toLane="2" dir="s" state="O" tl="center" linkIndex="8"/>
     
-    <connection from="west_in" to="east_out" fromLane="0" toLane="0" tl="center" linkIndex="9"/>
-    <connection from="west_in" to="east_out" fromLane="1" toLane="1" tl="center" linkIndex="10"/>
-    <connection from="west_in" to="east_out" fromLane="2" toLane="2" tl="center" linkIndex="11"/>
+    <connection from="west_in" to="east_out" fromLane="0" toLane="0" dir="s" state="O" tl="center" linkIndex="9"/>
+    <connection from="west_in" to="east_out" fromLane="1" toLane="1" dir="s" state="O" tl="center" linkIndex="10"/>
+    <connection from="west_in" to="east_out" fromLane="2" toLane="2" dir="s" state="O" tl="center" linkIndex="11"/>
 
 </net>

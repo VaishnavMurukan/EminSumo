@@ -32,9 +32,9 @@ class EmergencyVehiclePriority:
     
     def __init__(self, tl_id='center'):
         self.tl_id = tl_id
-        self.normal_phase_duration = 20  # Normal green phase duration
-        self.emergency_phase_duration = 25  # Emergency green phase duration
-        self.yellow_duration = 3  # Yellow phase duration
+        self.normal_phase_duration = 5  # Normal green phase duration (5 seconds)
+        self.emergency_phase_duration = 10  # Emergency green phase duration (10 seconds)
+        self.yellow_duration = 2  # Yellow phase duration (reduced to 2s for faster switching)
         
         # Traffic light phase definitions
         # Phase indices: 0=NS_green, 1=NS_yellow, 2=EW_green, 3=EW_yellow
@@ -120,9 +120,10 @@ class EmergencyVehiclePriority:
     def activate_emergency_priority(self, vehicle_id, direction):
         """Activate emergency vehicle priority for the given direction"""
         print(f"\n{'='*60}")
-        print(f"[PRIORITY] Activating emergency priority for {vehicle_id}")
+        print(f"[PRIORITY] Emergency vehicle {vehicle_id} detected!")
         print(f"[PRIORITY] Direction: {direction}")
-        print(f"[PRIORITY] Duration: {self.emergency_phase_duration} seconds")
+        print(f"[PRIORITY] Max duration: {self.emergency_phase_duration}s (or until vehicle passes)")
+        print(f"[PRIORITY] ALL OTHER DIRECTIONS SET TO RED")
         print(f"{'='*60}\n")
         
         self.emergency_active = True
@@ -130,32 +131,26 @@ class EmergencyVehiclePriority:
         self.emergency_direction = direction
         self.emergency_start_time = traci.simulation.getTime()
         
-        # Set traffic light to green for emergency vehicle direction
+        # Set traffic light: GREEN for emergency direction, RED for all others
+        # Traffic light state format: 12 characters for 12 links (3 lanes x 4 directions)
+        # Order: north_in (3), east_in (3), south_in (3), west_in (3)
+        # G=green, r=red, y=yellow
+        
         if direction == 'NS':
-            # Set North-South to green
-            current_phase = traci.trafficlight.getPhase(self.tl_id)
-            
-            # If currently in EW phase, switch to yellow first
-            if current_phase in [self.PHASE_EW_GREEN]:
-                traci.trafficlight.setPhase(self.tl_id, self.PHASE_EW_YELLOW)
-                traci.trafficlight.setPhaseDuration(self.tl_id, self.yellow_duration)
-            else:
-                # Switch directly to NS green with extended duration
-                traci.trafficlight.setPhase(self.tl_id, self.PHASE_NS_GREEN)
-                traci.trafficlight.setPhaseDuration(self.tl_id, self.emergency_phase_duration)
+            # North-South GREEN, East-West RED
+            # Format: NS(3) + EW(3) + NS(3) + EW(3) = 12 signals
+            emergency_state = "GGGrrrGGGrrr"
+            print(f"[SIGNAL] North-South: GREEN | East-West: RED")
+            traci.trafficlight.setRedYellowGreenState(self.tl_id, emergency_state)
+            traci.trafficlight.setPhaseDuration(self.tl_id, self.emergency_phase_duration)
                 
         elif direction == 'EW':
-            # Set East-West to green
-            current_phase = traci.trafficlight.getPhase(self.tl_id)
-            
-            # If currently in NS phase, switch to yellow first
-            if current_phase in [self.PHASE_NS_GREEN]:
-                traci.trafficlight.setPhase(self.tl_id, self.PHASE_NS_YELLOW)
-                traci.trafficlight.setPhaseDuration(self.tl_id, self.yellow_duration)
-            else:
-                # Switch directly to EW green with extended duration
-                traci.trafficlight.setPhase(self.tl_id, self.PHASE_EW_GREEN)
-                traci.trafficlight.setPhaseDuration(self.tl_id, self.emergency_phase_duration)
+            # East-West GREEN, North-South RED
+            # Format: NS(3) + EW(3) + NS(3) + EW(3) = 12 signals
+            emergency_state = "rrrGGGrrrGGG"
+            print(f"[SIGNAL] East-West: GREEN | North-South: RED")
+            traci.trafficlight.setRedYellowGreenState(self.tl_id, emergency_state)
+            traci.trafficlight.setPhaseDuration(self.tl_id, self.emergency_phase_duration)
     
     def check_emergency_vehicle_passed(self):
         """Check if emergency vehicle has passed the intersection"""
@@ -171,17 +166,17 @@ class EmergencyVehiclePriority:
             # Check if vehicle has passed the intersection
             road_id = traci.vehicle.getRoadID(self.emergency_vehicle_id)
             
-            # If vehicle is on outgoing edge, it has passed
+            # If vehicle is on outgoing edge, it has passed - IMMEDIATELY return to normal
             if '_out' in road_id or road_id == '':
                 print(f"[INFO] Emergency vehicle {self.emergency_vehicle_id} has passed the intersection")
                 return True
             
-            # Check if minimum emergency duration has elapsed
+            # Safety timeout - if 10 seconds elapsed, assume vehicle passed
             current_time = traci.simulation.getTime()
             elapsed_time = current_time - self.emergency_start_time
             
-            if elapsed_time >= self.emergency_phase_duration:
-                print(f"[INFO] Emergency priority duration completed ({elapsed_time:.1f}s)")
+            if elapsed_time >= 10:
+                print(f"[TIMEOUT] Emergency priority timeout after {elapsed_time:.1f}s - resuming normal operation")
                 return True
                 
         except:
@@ -192,12 +187,16 @@ class EmergencyVehiclePriority:
     def deactivate_emergency_priority(self):
         """Deactivate emergency priority and return to normal operation"""
         print(f"\n{'='*60}")
+        print(f"[NORMAL] Emergency vehicle {self.emergency_vehicle_id} has passed")
         print(f"[NORMAL] Returning to normal traffic light operation")
-        print(f"[NORMAL] Emergency vehicle {self.emergency_vehicle_id} has been processed")
+        print(f"[NORMAL] Switching to opposite direction immediately")
         print(f"{'='*60}\n")
         
         # Mark vehicle as processed
         self.processed_emergency_vehicles.add(self.emergency_vehicle_id)
+        
+        # Store the emergency direction to switch to opposite
+        last_emergency_direction = self.emergency_direction
         
         # Reset state
         self.emergency_active = False
@@ -205,23 +204,40 @@ class EmergencyVehiclePriority:
         self.emergency_direction = None
         self.emergency_start_time = 0
         
-        # Resume normal traffic light program
-        # Let it continue with current phase but restore normal durations
-        current_phase = traci.trafficlight.getPhase(self.tl_id)
-        
-        if current_phase in [self.PHASE_NS_GREEN, self.PHASE_EW_GREEN]:
-            traci.trafficlight.setPhaseDuration(self.tl_id, self.normal_phase_duration)
-        else:
-            traci.trafficlight.setPhaseDuration(self.tl_id, self.yellow_duration)
+        # Immediately switch to opposite direction to serve waiting vehicles
+        # Use brief yellow (2s) then switch to green for opposite direction
+        if last_emergency_direction == 'NS':
+            # Was NS green, now give green to EW (opposite direction)
+            yellow_state = "yyyrrryyyrrr"  # NS yellow, EW red (brief transition)
+            green_state = "rrrGGGrrrGGG"   # EW green, NS red
+            
+            # Set yellow briefly
+            traci.trafficlight.setRedYellowGreenState(self.tl_id, yellow_state)
+            traci.trafficlight.setPhaseDuration(self.tl_id, 2)  # Short yellow
+            
+        elif last_emergency_direction == 'EW':
+            # Was EW green, now give green to NS (opposite direction)
+            yellow_state = "rrryyyrrryyy"  # EW yellow, NS red (brief transition)
+            green_state = "GGGrrrGGGrrr"   # NS green, EW red
+            
+            # Set yellow briefly
+            traci.trafficlight.setRedYellowGreenState(self.tl_id, yellow_state)
+            traci.trafficlight.setPhaseDuration(self.tl_id, 2)  # Short yellow
     
     def run(self):
         """Main simulation loop"""
         print("\n" + "="*60)
         print("SUMO Emergency Vehicle Priority System")
         print("="*60)
-        print(f"Normal green phase: {self.normal_phase_duration}s")
-        print(f"Emergency green phase: {self.emergency_phase_duration}s")
-        print(f"Yellow phase: {self.yellow_duration}s")
+        print(f"NORMAL OPERATION:")
+        print(f"  - Green signal: {self.normal_phase_duration} seconds")
+        print(f"  - Red signal: {self.normal_phase_duration} seconds (opposite direction green)")
+        print(f"  - Yellow transition: {self.yellow_duration} seconds")
+        print(f"EMERGENCY MODE:")
+        print(f"  - Emergency vehicles arrive every 15 seconds")
+        print(f"  - Priority duration: {self.emergency_phase_duration} seconds max")
+        print(f"  - All other directions: RED")
+        print(f"  - Returns to normal immediately after vehicle passes")
         print("="*60 + "\n")
         
         step = 0

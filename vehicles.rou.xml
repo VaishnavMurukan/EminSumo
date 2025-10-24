@@ -48,12 +48,43 @@
     <flow id="flow_W_E_normal_1" type="normal_car" route="route_W_E_1" begin="0" end="3600" probability="0.15" departLane="1" departSpeed="max"/>
     
     <!-- Emergency Vehicle Definitions - Using dedicated lane (lane 2) -->
-    <!-- Emergency vehicles from different directions at different times -->
-    <vehicle id="emergency_1" type="emergency" route="route_N_S_2" depart="30" departLane="2" departSpeed="max" color="1,0,0"/>
-    <vehicle id="emergency_2" type="emergency" route="route_S_N_2" depart="120" departLane="2" departSpeed="max" color="1,0,0"/>
-    <vehicle id="emergency_3" type="emergency" route="route_E_W_2" depart="200" departLane="2" departSpeed="max" color="1,0,0"/>
-    <vehicle id="emergency_4" type="emergency" route="route_W_E_2" depart="300" departLane="2" departSpeed="max" color="1,0,0"/>
-    <vehicle id="emergency_5" type="emergency" route="route_N_S_2" depart="450" departLane="2" departSpeed="max" color="1,0,0"/>
-    <vehicle id="emergency_6" type="emergency" route="route_E_W_2" depart="600" departLane="2" departSpeed="max" color="1,0,0"/>
+    <!-- Emergency vehicles from all directions every 15 seconds -->
+    
+    <!-- Emergency vehicles rotating through all 4 directions every 15 seconds -->
+    <!-- Pattern: N, E, S, W, N, E, S, W... -->
+    <vehicle id="emergency_01" type="emergency" route="route_N_S_2" depart="15" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_02" type="emergency" route="route_E_W_2" depart="30" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_03" type="emergency" route="route_S_N_2" depart="45" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_04" type="emergency" route="route_W_E_2" depart="60" departLane="2" departSpeed="max" color="1,0,0"/>
+    
+    <vehicle id="emergency_05" type="emergency" route="route_N_S_2" depart="75" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_06" type="emergency" route="route_E_W_2" depart="90" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_07" type="emergency" route="route_S_N_2" depart="105" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_08" type="emergency" route="route_W_E_2" depart="120" departLane="2" departSpeed="max" color="1,0,0"/>
+    
+    <vehicle id="emergency_09" type="emergency" route="route_N_S_2" depart="135" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_10" type="emergency" route="route_E_W_2" depart="150" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_11" type="emergency" route="route_S_N_2" depart="165" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_12" type="emergency" route="route_W_E_2" depart="180" departLane="2" departSpeed="max" color="1,0,0"/>
+    
+    <vehicle id="emergency_13" type="emergency" route="route_N_S_2" depart="195" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_14" type="emergency" route="route_E_W_2" depart="210" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_15" type="emergency" route="route_S_N_2" depart="225" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_16" type="emergency" route="route_W_E_2" depart="240" departLane="2" departSpeed="max" color="1,0,0"/>
+    
+    <vehicle id="emergency_17" type="emergency" route="route_N_S_2" depart="255" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_18" type="emergency" route="route_E_W_2" depart="270" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_19" type="emergency" route="route_S_N_2" depart="285" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_20" type="emergency" route="route_W_E_2" depart="300" departLane="2" departSpeed="max" color="1,0,0"/>
+    
+    <vehicle id="emergency_21" type="emergency" route="route_N_S_2" depart="315" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_22" type="emergency" route="route_E_W_2" depart="330" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_23" type="emergency" route="route_S_N_2" depart="345" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_24" type="emergency" route="route_W_E_2" depart="360" departLane="2" departSpeed="max" color="1,0,0"/>
+    
+    <vehicle id="emergency_25" type="emergency" route="route_N_S_2" depart="375" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_26" type="emergency" route="route_E_W_2" depart="390" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_27" type="emergency" route="route_S_N_2" depart="405" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_28" type="emergency" route="route_W_E_2" depart="420" departLane="2" departSpeed="max" color="1,0,0"/>
     
 </routes>
