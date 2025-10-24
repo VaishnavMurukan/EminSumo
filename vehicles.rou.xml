@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Vehicle routes and types definition -->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    
+    <!-- Vehicle Type Definitions -->
+    <!-- Normal passenger car -->
+    <vType id="normal_car" accel="2.6" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="13.89" guiShape="passenger" color="1,1,0"/>
+    
+    <!-- Emergency vehicle (ambulance) - higher priority, distinctive color -->
+    <vType id="emergency" accel="3.0" decel="5.0" sigma="0.3" length="6" minGap="2.5" maxSpeed="16.67" guiShape="emergency" color="1,0,0" vClass="emergency"/>
+    
+    <!-- Routes Definition -->
+    <!-- North to South routes -->
+    <route id="route_N_S_0" edges="north_in south_out"/>
+    <route id="route_N_S_1" edges="north_in south_out"/>
+    <route id="route_N_S_2" edges="north_in south_out"/>
+    
+    <!-- South to North routes -->
+    <route id="route_S_N_0" edges="south_in north_out"/>
+    <route id="route_S_N_1" edges="south_in north_out"/>
+    <route id="route_S_N_2" edges="south_in north_out"/>
+    
+    <!-- East to West routes -->
+    <route id="route_E_W_0" edges="east_in west_out"/>
+    <route id="route_E_W_1" edges="east_in west_out"/>
+    <route id="route_E_W_2" edges="east_in west_out"/>
+    
+    <!-- West to East routes -->
+    <route id="route_W_E_0" edges="west_in east_out"/>
+    <route id="route_W_E_1" edges="west_in east_out"/>
+    <route id="route_W_E_2" edges="west_in east_out"/>
+    
+    <!-- Flow Definitions - Normal Traffic -->
+    <!-- North to South normal traffic -->
+    <flow id="flow_N_S_normal_0" type="normal_car" route="route_N_S_0" begin="0" end="3600" probability="0.15" departLane="0" departSpeed="max"/>
+    <flow id="flow_N_S_normal_1" type="normal_car" route="route_N_S_1" begin="0" end="3600" probability="0.15" departLane="1" departSpeed="max"/>
+    
+    <!-- South to North normal traffic -->
+    <flow id="flow_S_N_normal_0" type="normal_car" route="route_S_N_0" begin="0" end="3600" probability="0.15" departLane="0" departSpeed="max"/>
+    <flow id="flow_S_N_normal_1" type="normal_car" route="route_S_N_1" begin="0" end="3600" probability="0.15" departLane="1" departSpeed="max"/>
+    
+    <!-- East to West normal traffic -->
+    <flow id="flow_E_W_normal_0" type="normal_car" route="route_E_W_0" begin="0" end="3600" probability="0.15" departLane="0" departSpeed="max"/>
+    <flow id="flow_E_W_normal_1" type="normal_car" route="route_E_W_1" begin="0" end="3600" probability="0.15" departLane="1" departSpeed="max"/>
+    
+    <!-- West to East normal traffic -->
+    <flow id="flow_W_E_normal_0" type="normal_car" route="route_W_E_0" begin="0" end="3600" probability="0.15" departLane="0" departSpeed="max"/>
+    <flow id="flow_W_E_normal_1" type="normal_car" route="route_W_E_1" begin="0" end="3600" probability="0.15" departLane="1" departSpeed="max"/>
+    
+    <!-- Emergency Vehicle Definitions - Using dedicated lane (lane 2) -->
+    <!-- Emergency vehicles from different directions at different times -->
+    <vehicle id="emergency_1" type="emergency" route="route_N_S_2" depart="30" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_2" type="emergency" route="route_S_N_2" depart="120" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_3" type="emergency" route="route_E_W_2" depart="200" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_4" type="emergency" route="route_W_E_2" depart="300" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_5" type="emergency" route="route_N_S_2" depart="450" departLane="2" departSpeed="max" color="1,0,0"/>
+    <vehicle id="emergency_6" type="emergency" route="route_E_W_2" depart="600" departLane="2" departSpeed="max" color="1,0,0"/>
+    
+</routes>

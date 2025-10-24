@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GUI Settings for SUMO visualization -->
+<viewsettings>
+    <scheme name="real world">
+        <background backgroundColor="0.39,0.58,0.93"/>
+    </scheme>
+    
+    <viewport zoom="100.0" x="100.0" y="100.0" angle="0"/>
+    
+    <delay value="100"/>
+    
+    <scheme>
+        <background backgroundColor="0.39,0.58,0.93"/>
+        <edges laneEdgeMode="0"/>
+        <vehicles vehicleMode="0" vehicleQuality="2" vehicleSize="1" showBlinker="1"/>
+        <persons personMode="0" personQuality="2" personSize="1"/>
+    </scheme>
+    
+</viewsettings>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Additional files for traffic lights and detectors -->
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    
+    <!-- Induction Loop Detectors for Emergency Vehicle Detection -->
+    <!-- These detectors will be placed before the intersection to detect approaching emergency vehicles -->
+    
+    <!-- North approach detector (lane 2 - emergency lane) -->
+    <inductionLoop id="detector_north_emergency" lane="north_in_2" pos="50" freq="1" file="detector_output.xml"/>
+    
+    <!-- South approach detector (lane 2 - emergency lane) -->
+    <inductionLoop id="detector_south_emergency" lane="south_in_2" pos="50" freq="1" file="detector_output.xml"/>
+    
+    <!-- East approach detector (lane 2 - emergency lane) -->
+    <inductionLoop id="detector_east_emergency" lane="east_in_2" pos="50" freq="1" file="detector_output.xml"/>
+    
+    <!-- West approach detector (lane 2 - emergency lane) -->
+    <inductionLoop id="detector_west_emergency" lane="west_in_2" pos="50" freq="1" file="detector_output.xml"/>
+    
+    <!-- Additional detectors for normal traffic (optional for statistics) -->
+    <inductionLoop id="detector_north_0" lane="north_in_0" pos="50" freq="1" file="detector_output.xml"/>
+    <inductionLoop id="detector_north_1" lane="north_in_1" pos="50" freq="1" file="detector_output.xml"/>
+    
+    <inductionLoop id="detector_south_0" lane="south_in_0" pos="50" freq="1" file="detector_output.xml"/>
+    <inductionLoop id="detector_south_1" lane="south_in_1" pos="50" freq="1" file="detector_output.xml"/>
+    
+    <inductionLoop id="detector_east_0" lane="east_in_0" pos="50" freq="1" file="detector_output.xml"/>
+    <inductionLoop id="detector_east_1" lane="east_in_1" pos="50" freq="1" file="detector_output.xml"/>
+    
+    <inductionLoop id="detector_west_0" lane="west_in_0" pos="50" freq="1" file="detector_output.xml"/>
+    <inductionLoop id="detector_west_1" lane="west_in_1" pos="50" freq="1" file="detector_output.xml"/>
+    
+</additional>

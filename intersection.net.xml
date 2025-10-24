@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SUMO Network file with 4-way intersection including emergency lanes -->
+<net version="1.16" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="100.00,100.00" convBoundary="0.00,0.00,200.00,200.00" origBoundary="-10000000000.00,-10000000000.00,10000000000.00,10000000000.00" projParameter="!"/>
+
+    <!-- Edge Types -->
+    <type id="normal_road" priority="1" numLanes="3" speed="13.89"/>
+
+    <!-- Nodes (Junctions) -->
+    <node id="center" type="traffic_light" x="100.00" y="100.00" tl="center"/>
+    <node id="north" type="priority" x="100.00" y="200.00"/>
+    <node id="south" type="priority" x="100.00" y="0.00"/>
+    <node id="east" type="priority" x="200.00" y="100.00"/>
+    <node id="west" type="priority" x="0.00" y="100.00"/>
+
+    <!-- Edges (Roads) -->
+    <!-- North approach -->
+    <edge id="north_in" from="north" to="center" priority="1" numLanes="3" speed="13.89">
+        <lane id="north_in_0" index="0" speed="13.89" length="100.00" shape="95.20,200.00 95.20,103.20"/>
+        <lane id="north_in_1" index="1" speed="13.89" length="100.00" shape="98.40,200.00 98.40,103.20"/>
+        <lane id="north_in_2" index="2" speed="13.89" length="100.00" shape="101.60,200.00 101.60,103.20"/>
+    </edge>
+    <edge id="north_out" from="center" to="north" priority="1" numLanes="3" speed="13.89">
+        <lane id="north_out_0" index="0" speed="13.89" length="100.00" shape="104.80,103.20 104.80,200.00"/>
+        <lane id="north_out_1" index="1" speed="13.89" length="100.00" shape="108.00,103.20 108.00,200.00"/>
+        <lane id="north_out_2" index="2" speed="13.89" length="100.00" shape="111.20,103.20 111.20,200.00"/>
+    </edge>
+
+    <!-- South approach -->
+    <edge id="south_in" from="south" to="center" priority="1" numLanes="3" speed="13.89">
+        <lane id="south_in_0" index="0" speed="13.89" length="100.00" shape="104.80,0.00 104.80,96.80"/>
+        <lane id="south_in_1" index="1" speed="13.89" length="100.00" shape="101.60,0.00 101.60,96.80"/>
+        <lane id="south_in_2" index="2" speed="13.89" length="100.00" shape="98.40,0.00 98.40,96.80"/>
+    </edge>
+    <edge id="south_out" from="center" to="south" priority="1" numLanes="3" speed="13.89">
+        <lane id="south_out_0" index="0" speed="13.89" length="100.00" shape="95.20,96.80 95.20,0.00"/>
+        <lane id="south_out_1" index="1" speed="13.89" length="100.00" shape="92.00,96.80 92.00,0.00"/>
+        <lane id="south_out_2" index="2" speed="13.89" length="100.00" shape="88.80,96.80 88.80,0.00"/>
+    </edge>
+
+    <!-- East approach -->
+    <edge id="east_in" from="east" to="center" priority="1" numLanes="3" speed="13.89">
+        <lane id="east_in_0" index="0" speed="13.89" length="100.00" shape="200.00,104.80 103.20,104.80"/>
+        <lane id="east_in_1" index="1" speed="13.89" length="100.00" shape="200.00,101.60 103.20,101.60"/>
+        <lane id="east_in_2" index="2" speed="13.89" length="100.00" shape="200.00,98.40 103.20,98.40"/>
+    </edge>
+    <edge id="east_out" from="center" to="east" priority="1" numLanes="3" speed="13.89">
+        <lane id="east_out_0" index="0" speed="13.89" length="100.00" shape="103.20,95.20 200.00,95.20"/>
+        <lane id="east_out_1" index="1" speed="13.89" length="100.00" shape="103.20,92.00 200.00,92.00"/>
+        <lane id="east_out_2" index="2" speed="13.89" length="100.00" shape="103.20,88.80 200.00,88.80"/>
+    </edge>
+
+    <!-- West approach -->
+    <edge id="west_in" from="west" to="center" priority="1" numLanes="3" speed="13.89">
+        <lane id="west_in_0" index="0" speed="13.89" length="100.00" shape="0.00,95.20 96.80,95.20"/>
+        <lane id="west_in_1" index="1" speed="13.89" length="100.00" shape="0.00,98.40 96.80,98.40"/>
+        <lane id="west_in_2" index="2" speed="13.89" length="100.00" shape="0.00,101.60 96.80,101.60"/>
+    </edge>
+    <edge id="west_out" from="center" to="west" priority="1" numLanes="3" speed="13.89">
+        <lane id="west_out_0" index="0" speed="13.89" length="100.00" shape="96.80,104.80 0.00,104.80"/>
+        <lane id="west_out_1" index="1" speed="13.89" length="100.00" shape="96.80,108.00 0.00,108.00"/>
+        <lane id="west_out_2" index="2" speed="13.89" length="100.00" shape="96.80,111.20 0.00,111.20"/>
+    </edge>
+
+    <!-- Traffic Light Logic will be in additional files -->
+    <tlLogic id="center" type="static" programID="normal" offset="0">
+        <!-- North-South Green (20 seconds) -->
+        <phase duration="20" state="GGGrrrGGGrrr"/>
+        <!-- North-South Yellow (3 seconds) -->
+        <phase duration="3" state="yyyrrryyyrrr"/>
+        <!-- East-West Green (20 seconds) -->
+        <phase duration="20" state="rrrGGGrrrGGG"/>
+        <!-- East-West Yellow (3 seconds) -->
+        <phase duration="3" state="rrryyyrrryyy"/>
+    </tlLogic>
+
+    <!-- Junction connections -->
+    <junction id="center" type="traffic_light" x="100.00" y="100.00" incLanes="north_in_0 north_in_1 north_in_2 east_in_0 east_in_1 east_in_2 south_in_0 south_in_1 south_in_2 west_in_0 west_in_1 west_in_2" intLanes="" shape="93.60,103.20 112.80,103.20 112.80,96.80 103.20,93.60 103.20,112.80 96.80,112.80 96.80,103.20">
+        <!-- North to South (straight) -->
+        <request index="0" response="000000000000" foes="000100010000"/>
+        <request index="1" response="000000000000" foes="111100110000"/>
+        <request index="2" response="000000000000" foes="111100110000"/>
+        <!-- East to West (straight) -->
+        <request index="3" response="000000000000" foes="110000110000"/>
+        <request index="4" response="000011000111" foes="110001110111"/>
+        <request index="5" response="000011000111" foes="110001110111"/>
+        <!-- South to North (straight) -->
+        <request index="6" response="000000000000" foes="000000000000"/>
+        <request index="7" response="000000000000" foes="000011111100"/>
+        <request index="8" response="000000000000" foes="000011111100"/>
+        <!-- West to East (straight) -->
+        <request index="9" response="000000000000" foes="000000110000"/>
+        <request index="10" response="111100000011" foes="111100110011"/>
+        <request index="11" response="111100000011" foes="111100110011"/>
+    </junction>
+
+    <junction id="north" type="priority" x="100.00" y="200.00" incLanes="north_out_0 north_out_1 north_out_2" intLanes="" shape="103.20,200.00 112.80,200.00 103.20,200.00"/>
+    <junction id="south" type="priority" x="100.00" y="0.00" incLanes="south_out_0 south_out_1 south_out_2" intLanes="" shape="96.80,0.00 87.20,0.00 96.80,0.00"/>
+    <junction id="east" type="priority" x="200.00" y="100.00" incLanes="east_out_0 east_out_1 east_out_2" intLanes="" shape="200.00,96.80 200.00,87.20 200.00,96.80"/>
+    <junction id="west" type="priority" x="0.00" y="100.00" incLanes="west_out_0 west_out_1 west_out_2" intLanes="" shape="0.00,103.20 0.00,112.80 0.00,103.20"/>
+
+    <!-- Connections define allowed movements through junction -->
+    <connection from="north_in" to="south_out" fromLane="0" toLane="0" tl="center" linkIndex="0"/>
+    <connection from="north_in" to="south_out" fromLane="1" toLane="1" tl="center" linkIndex="1"/>
+    <connection from="north_in" to="south_out" fromLane="2" toLane="2" tl="center" linkIndex="2"/>
+    
+    <connection from="east_in" to="west_out" fromLane="0" toLane="0" tl="center" linkIndex="3"/>
+    <connection from="east_in" to="west_out" fromLane="1" toLane="1" tl="center" linkIndex="4"/>
+    <connection from="east_in" to="west_out" fromLane="2" toLane="2" tl="center" linkIndex="5"/>
+    
+    <connection from="south_in" to="north_out" fromLane="0" toLane="0" tl="center" linkIndex="6"/>
+    <connection from="south_in" to="north_out" fromLane="1" toLane="1" tl="center" linkIndex="7"/>
+    <connection from="south_in" to="north_out" fromLane="2" toLane="2" tl="center" linkIndex="8"/>
+    
+    <connection from="west_in" to="east_out" fromLane="0" toLane="0" tl="center" linkIndex="9"/>
+    <connection from="west_in" to="east_out" fromLane="1" toLane="1" tl="center" linkIndex="10"/>
+    <connection from="west_in" to="east_out" fromLane="2" toLane="2" tl="center" linkIndex="11"/>
+
+</net>
